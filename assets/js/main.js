@@ -40,74 +40,6 @@
   }
 
   /* --------------------------------------------------------------------------
-     THEME / DARK MODE
-     -------------------------------------------------------------------------- */
-
-  const THEME_KEY = "fracture-theme";
-  const htmlRoot = document.documentElement;
-
-  function getSavedTheme() {
-    try {
-      return localStorage.getItem(THEME_KEY);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  function setTheme(theme) {
-    if (theme === "light") {
-      htmlRoot.classList.add("theme-light");
-    } else {
-      htmlRoot.classList.remove("theme-light");
-    }
-    try {
-      localStorage.setItem(THEME_KEY, theme);
-    } catch (e) {
-      // Storage unavailable; theme still applied for this session.
-    }
-  }
-
-  function initTheme() {
-    const saved = getSavedTheme();
-    const prefersDark = !window.matchMedia ||
-      !window.matchMedia("(prefers-color-scheme: light)").matches;
-    const theme = saved || (prefersDark ? "dark" : "light");
-    setTheme(theme);
-  }
-
-  function buildThemeToggle() {
-    const headerRight = $(".header-right");
-    if (!headerRight) return;
-    const isLight = htmlRoot.classList.contains("theme-light");
-    const label = isLight ? "Switch to dark mode" : "Switch to light mode";
-    const toggle = document.createElement("button");
-    toggle.type = "button";
-    toggle.className = "theme-toggle";
-    toggle.setAttribute("aria-label", label);
-    toggle.innerHTML =
-      '<span class="theme-toggle__icon" aria-hidden="true">' +
-      (isLight ? "&#9788;" : "&#9790;") +
-      "</span>" +
-      '<span class="theme-toggle__label mono">' +
-      (isLight ? "LIGHT" : "DARK") +
-      "</span>";
-    toggle.addEventListener("click", () => {
-      const nowLight = htmlRoot.classList.toggle("theme-light");
-      toggle.querySelector(".theme-toggle__icon").textContent = nowLight
-        ? "&#9788;"
-        : "&#9790;";
-      toggle.querySelector(".theme-toggle__label").textContent = nowLight
-        ? "LIGHT"
-        : "DARK";
-      toggle.setAttribute("aria-label", nowLight
-        ? "Switch to dark mode"
-        : "Switch to light mode");
-      setTheme(nowLight ? "light" : "dark");
-    });
-    headerRight.insertBefore(toggle, headerRight.firstChild);
-  }
-
-  /* --------------------------------------------------------------------------
      IMAGE HANDLING & TECHNICAL PLACEHOLDERS
      -------------------------------------------------------------------------- */
 
@@ -341,14 +273,14 @@
       "</p>" +
       '<div class="footer-status"><span class="status-dot" aria-hidden="true"></span>SEASON ' +
       escapeHtml(DATA.identity.season) +
-      " // IN BUILD</div>" +
+      "</div>" +
       "</div>" +
       '<div class="footer-col"><div class="footer-heading">EXPLORE</div><nav class="footer-links" aria-label="Footer navigation">' +
       NAV_ITEMS.map(
         (item) =>
           '<a href="' + item.href + '">' + escapeHtml(item.label) + "</a>"
       ).join("") +
-      '<a href="contact.html">CONTACT</a></nav></div>' +
+      '</nav></div>' +
       '<div class="footer-col"><div class="footer-heading">CONNECT</div><div class="footer-links">' +
       (DATA.identity.contactEmail
         ? '<a href="mailto:' +
@@ -376,8 +308,8 @@
       currentYear() +
       " FRACTURE FTC #" +
       escapeHtml(DATA.identity.teamNumber) +
-      ". ALL SYSTEMS IN BUILD.</span>" +
-      "<span>ROUND ROCK, TX // 30.5083&deg; N, 97.6789&deg; W</span>" +
+      "</span>" +
+      "<span>ROUND ROCK, TX</span>" +
       '<button type="button" class="back-to-top">BACK TO TOP <span aria-hidden="true">&#8593;</span></button>' +
       "</div>" +
       "</div>";
@@ -590,64 +522,64 @@
   }
 
   /* --------------------------------------------------------------------------
-     HOME — LANDING PAGE
+     HOME — ORIGINAL DESIGN (WITHOUT ROBOT PHOTO)
      -------------------------------------------------------------------------- */
 
-  function navCardMarkup(id, label, href, index) {
-    return (
-      '<a class="nav-card" href="' +
-      escapeHtml(href) +
-      '">' +
-      '<span class="nav-card__index mono">' +
-      escapeHtml(index) +
-      "</span>" +
-      '<h3 class="nav-card__title display">' +
-      escapeHtml(label) +
-      "</h3>" +
-      '<span class="nav-card__arrow" aria-hidden="true">&#8599;</span>' +
-      "</a>"
-    );
-  }
-
   function hydrateHome() {
-    const navCards = [
-      { id: "about", label: "About Us", href: "about.html", index: "01" },
-      { id: "robot", label: "Our Robot", href: "robot.html", index: "02" },
-      { id: "outreach", label: "Outreach", href: "outreach.html", index: "03" },
-      { id: "achievements", label: "Achievements", href: "achievements.html", index: "04" },
-      { id: "contact", label: "Contact Us", href: "contact.html", index: "05" }
-    ];
+    const kpi = $("#home-kpi-strip");
+    if (kpi) kpi.innerHTML = DATA.home.keyStats.map(statMarkup).join("");
 
-    const homeMain = $("#main");
-    if (!homeMain) return;
+    const principles = $("#home-principles");
+    if (principles) {
+      principles.innerHTML = DATA.home.principles
+        .map(
+          (item, index) =>
+            '<article class="principle reveal" style="--d:' +
+            index * 80 +
+            '">' +
+            '<span class="principle__index">' +
+            escapeHtml(item.index) +
+            "</span>" +
+            '<div class="principle__copy"><h3>' +
+            escapeHtml(item.title) +
+            "</h3><p>" +
+            escapeHtml(item.body) +
+            "</p></div>" +
+            '<span class="principle__mark" aria-hidden="true">+</span>' +
+            "</article>"
+        )
+        .join("");
+    }
 
-    homeMain.innerHTML =
-      '<section class="page-hero home-cover" data-glow>' +
-      '<div class="container home-cover__inner">' +
-      '<div class="home-logo">' +
-      '<img class="home-logo__mark" src="' +
-      escapeHtml(DATA.identity.logoPath) +
-      '" alt="" width="160" height="160" loading="eager" />' +
-      "</div>" +
-      '<h1 class="home-title display">FRACTURE</h1>' +
-      '<span class="home-number display mono">37687</span>' +
-      '<span class="home-sub mono">FTC TEAM // ROUND ROCK, TEXAS</span>' +
-      "</div>" +
-      '</section>' +
-      '<section class="section section--light home-nav-section">' +
-      '<div class="container">' +
-      '<div class="nav-grid">' +
-      navCards.map(navCardMarkup).join("") +
-      "</div>" +
-      "</div>" +
-      '</section>' +
-      '<section class="section section--dark home-note-section">' +
-      '<div class="container">' +
-      '<p class="home-note mono" style="text-align:center;">' +
-      "Five builders. One machine. No shortcuts — just the next iteration." +
-      "</p>" +
-      "</div>" +
-      "</section>";
+    const roster = $("#home-roster-preview");
+    if (roster) {
+      roster.innerHTML = DATA.about.members
+        .slice(0, 5)
+        .map((person, index) => memberCardMarkup(person, index * 70))
+        .join("");
+    }
+
+    const outreach = $("#home-outreach-preview");
+    if (outreach) {
+      outreach.innerHTML = DATA.outreach.programs
+        .slice(0, 3)
+        .map(
+          (program, index) =>
+            '<a class="mini-program reveal" style="--d:' +
+            index * 80 +
+            '" href="outreach.html">' +
+            '<div class="mini-program__top"><span class="tag">' +
+            escapeHtml(program.status) +
+            '</span><span class="mono">' +
+            String(index + 1).padStart(2, "0") +
+            '</span></div><h3 class="mini-program__title">' +
+            escapeHtml(program.title) +
+            '</h3><p class="mini-program__copy">' +
+            escapeHtml(program.summary) +
+            '</p><span class="mini-program__link">OPEN PROGRAM <span aria-hidden="true">&#8599;</span></span></a>'
+        )
+        .join("");
+    }
   }
 
   /* --------------------------------------------------------------------------
@@ -1090,90 +1022,48 @@
   function hydrateAchievements() {
     setText("[data-achievements='intro']", DATA.achievements.intro);
 
-    const stats = $("#achievements-stats");
-    if (stats) {
-      stats.innerHTML = DATA.achievements.summaryStats.map(statMarkup).join("");
-    }
-
-    const seasons = $("#achievements-seasons");
-    if (seasons) {
-      seasons.innerHTML = DATA.achievements.seasons
-        .map((season) => {
-          if (!season.events || !season.events.length) {
-            return (
-              '<div class="empty-state reveal">' +
-              '<span class="empty-state__ghost" aria-hidden="true">000</span>' +
-              '<div class="empty-state__head"><span class="tag">ARCHIVE EMPTY</span><span class="mono">' +
-              escapeHtml(season.season) +
-              " // " +
-              escapeHtml(season.robotName) +
-              '</span></div><h3 class="empty-state__title">NO MATCH DATA LOGGED</h3><p class="empty-state__copy">' +
-              escapeHtml(DATA.achievements.archiveNote) +
-              '</p><div class="empty-state__grid">' +
-              '<div><span>SEASON</span><strong>' +
-              escapeHtml(season.season) +
-              "</strong></div>" +
-              '<div><span>PLATFORM</span><strong>' +
-              escapeHtml(season.robotName) +
-              "</strong></div>" +
-              '<div><span>STATUS</span><strong>' +
-              escapeHtml(season.status) +
-              "</strong></div>" +
-              '<div><span>FIRST EVENT</span><strong>TO BE ANNOUNCED</strong></div>' +
-              "</div></div>"
-            );
-          }
-
-          const rows = season.events
+    const awards = DATA.achievements.awards || [];
+    const container = $("#achievements-awards");
+    if (container) {
+      if (awards.length === 0) {
+        container.innerHTML =
+          '<div class="awards-empty">' +
+          '<span class="awards-empty__mark" aria-hidden="true">—</span>' +
+          '<h3 class="awards-empty__title">No awards recorded yet.</h3>' +
+          '<p class="awards-empty__copy">Awards will appear here as they are earned and verified.</p>' +
+          '</div>';
+      } else {
+        container.innerHTML =
+          '<ul class="awards-list">' +
+          awards
             .map(
-              (event) =>
-                '<div class="result-row"><span class="result-date mono">' +
-                escapeHtml(event.date) +
-                '</span><div class="result-main"><h3>' +
-                escapeHtml(event.event) +
-                '</h3><p>' +
-                escapeHtml(event.notes || "") +
-                '</p><span class="result-award">' +
-                escapeHtml(event.award || "NO AWARD LOGGED") +
-                '</span></div><div class="result-numbers"><span>RANK <strong>' +
-                escapeHtml(event.ranking) +
-                "</strong></span><span>RECORD <strong>" +
-                escapeHtml(event.record) +
-                "</strong></span></div></div>"
+              (award, index) =>
+                '<li class="award-item reveal" style="--d:' +
+                index * 80 +
+                '">' +
+                '<span class="award-item__index mono">' +
+                String(index + 1).padStart(2, "0") +
+                "</span>" +
+                '<div class="award-item__main">' +
+                '<h3 class="award-item__title">' +
+                escapeHtml(award.title) +
+                "</h3>" +
+                (award.detail
+                  ? '<p class="award-item__detail">' +
+                    escapeHtml(award.detail) +
+                    "</p>"
+                  : "") +
+                "</div>" +
+                '<div class="award-item__meta mono"><span>' +
+                escapeHtml(award.event || "Event to be announced") +
+                "</span><span>" +
+                escapeHtml(award.season || DATA.identity.season) +
+                "</span></div>" +
+                "</li>"
             )
-            .join("");
-
-          return (
-            '<div class="season-block"><div class="season-head"><div><span class="eyebrow">' +
-            escapeHtml(season.season) +
-            '</span><h3>' +
-            escapeHtml(season.robotName) +
-            '</h3></div><span class="tag">' +
-            escapeHtml(season.status) +
-            '</span></div><div class="result-list">' +
-            rows +
-            "</div></div>"
-          );
-        })
-        .join("");
-    }
-
-    const objectives = $("#achievements-objectives");
-    if (objectives) {
-      objectives.innerHTML = DATA.achievements.objectives
-        .map(
-          (objective, index) =>
-            '<article class="objective-card reveal" style="--d:' +
-            index * 80 +
-            '"><span class="objective-card__index">' +
-            escapeHtml(objective.index) +
-            "</span><h3>" +
-            escapeHtml(objective.title) +
-            "</h3><p>" +
-            escapeHtml(objective.body) +
-            '</p><span class="objective-card__mark">TARGET</span></article>'
-        )
-        .join("");
+            .join("") +
+          "</ul>";
+      }
     }
   }
 
@@ -1230,61 +1120,6 @@
       });
     }
 
-    const form = $("#contact-form");
-    const feedback = $("#contact-form-feedback");
-    if (form) {
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const name = $("#sender-name", form).value.trim();
-        const email = $("#sender-email", form).value.trim();
-        const topic = $("#inquiry-topic", form).value;
-        const message = $("#sender-message", form).value.trim();
-
-        if (!name || !message) {
-          if (feedback) {
-            feedback.hidden = false;
-            feedback.textContent =
-              "Add your name and a message before opening the email draft.";
-          }
-          return;
-        }
-
-        let target = DATA.identity.contactEmail;
-        if (topic === "Sponsorship") target = DATA.identity.sponsorshipEmail;
-        if (topic === "Recruitment") target = DATA.identity.recruitmentEmail;
-
-        if (!target) {
-          if (feedback) {
-            feedback.hidden = false;
-            feedback.textContent =
-              "The team inbox is being configured. Please check back shortly.";
-          }
-          return;
-        }
-
-        const subject = encodeURIComponent(
-          "[" + topic + "] Inquiry from " + name + " // Fracture 37687"
-        );
-        const body = encodeURIComponent(
-          "Name: " +
-            name +
-            (email ? "\nEmail: " + email : "") +
-            "\nTopic: " +
-            topic +
-            "\n\n" +
-            message +
-            "\n\n— Sent from the Fracture #37687 website"
-        );
-
-        if (feedback) {
-          feedback.hidden = false;
-          feedback.textContent =
-            "Opening a pre-addressed draft to " + target + " in your email client.";
-        }
-        window.location.href = "mailto:" + target + "?subject=" + subject + "&body=" + body;
-      });
-    }
-
     const socials = $("#contact-socials");
     if (socials) {
       socials.innerHTML = DATA.identity.socials
@@ -1317,9 +1152,7 @@
      -------------------------------------------------------------------------- */
 
   document.addEventListener("DOMContentLoaded", () => {
-    initTheme();
     buildHeader();
-    buildThemeToggle();
     buildFooter();
     hydrateTicker();
     initScrollUI();

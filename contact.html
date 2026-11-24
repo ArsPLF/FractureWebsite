@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#050506" />
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sora:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
@@ -28,8 +28,8 @@
 
         <div class="page-hero__layout">
           <div>
-            <span class="eyebrow"><span class="status-dot" aria-hidden="true"></span> COMMS <span class="slash">/</span> CHANNELS OPEN</span>
-            <h1 class="page-title display">OPEN A<br /><span class="outline-text">CHANNEL.</span></h1>
+            <span class="eyebrow"><span class="status-dot" aria-hidden="true"></span> CONTACT <span class="slash">/</span> CHANNELS</span>
+            <h1 class="page-title display">CONTACT<br /><span class="outline-text">FRACTURE.</span></h1>
             <p class="page-lede" data-contact="intro">Reach Fracture about student membership, sponsorship, community workshops, or competition collaboration.</p>
           </div>
 
@@ -40,7 +40,6 @@
               <div><dt>BASE</dt><dd>ROUND ROCK, TEXAS</dd></div>
               <div><dt>SCHEDULE</dt><dd data-contact="schedule">BUILD SCHEDULE TO BE ANNOUNCED</dd></div>
               <div><dt>WORKSHOP</dt><dd data-contact="address">ROUND ROCK, TEXAS</dd></div>
-              <div><dt>STATUS</dt><dd>ACCEPTING INQUIRIES</dd></div>
             </dl>
           </div>
         </div>
@@ -55,9 +54,9 @@
             <span>DIRECT LINES</span>
           </div>
           <div class="section-head__main">
-            <h2 class="section-title">PICK A<br />FREQUENCY.</h2>
+            <h2 class="section-title">CHANNELS.<br /></h2>
             <div class="section-head__aside">
-              <p>Three inboxes, one team. Choose the closest match so your message reaches the right conversation.</p>
+              <p>Contact the team through the channels below.</p>
             </div>
           </div>
         </div>
@@ -66,74 +65,22 @@
       </div>
     </section>
 
-    <section class="section section--dark">
+    <section class="section section--dark social-section">
       <div class="container">
         <div class="section-head">
           <div class="section-head__label">
-            <span>02 / TRANSMIT</span>
-            <span>MESSAGE BUILDER</span>
+            <span>02 / SOCIAL</span>
+            <span>FOLLOW THE TEAM</span>
           </div>
           <div class="section-head__main">
-            <h2 class="section-title">SEND A<br />MESSAGE.</h2>
+            <h2 class="section-title">SOCIAL.<br /></h2>
             <div class="section-head__aside">
-              <p>This form builds a pre-addressed email draft on your device. Nothing is stored or sent by the website itself.</p>
+              <p>Team social media accounts are being set up. Links will be added here when available.</p>
             </div>
           </div>
         </div>
 
-        <div class="contact-grid">
-          <form class="contact-form" id="contact-form" novalidate>
-            <p class="contact-form__note" data-contact="formNote">This static site opens a pre-addressed draft in your email client.</p>
-
-            <div class="field-grid">
-              <div class="field">
-                <label for="sender-name">NAME</label>
-                <input type="text" id="sender-name" name="name" autocomplete="name" placeholder="Your name" required />
-              </div>
-              <div class="field">
-                <label for="sender-email">EMAIL</label>
-                <input type="email" id="sender-email" name="email" autocomplete="email" placeholder="you@example.com" />
-              </div>
-              <div class="field field--full">
-                <label for="inquiry-topic">TOPIC</label>
-                <select id="inquiry-topic" name="topic">
-                  <option value="General">General inquiry</option>
-                  <option value="Sponsorship">Sponsorship &amp; grants</option>
-                  <option value="Recruitment">Recruitment &amp; mentors</option>
-                  <option value="Outreach">Outreach event</option>
-                </select>
-              </div>
-              <div class="field field--full">
-                <label for="sender-message">MESSAGE</label>
-                <textarea id="sender-message" name="message" placeholder="What are you reaching out about?" required></textarea>
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <button type="submit" class="btn btn--primary">OPEN EMAIL DRAFT <span class="btn-arrow" aria-hidden="true">&#8599;</span></button>
-              <span class="eyebrow">NO DATA STORED // CLIENT-SIDE DRAFT</span>
-            </div>
-
-            <p class="form-feedback" id="contact-form-feedback" role="status" hidden></p>
-          </form>
-
-          <aside class="contact-aside" aria-label="Direct contact details">
-            <div class="contact-block">
-              <h3>DIRECT DATA</h3>
-              <dl class="detail-list">
-                <div><dt>EMAIL</dt><dd><a href="mailto:fracture37687@gmail.com">FRACTURE37687@GMAIL.COM</a></dd></div>
-                <div><dt>BASE</dt><dd>ROUND ROCK, TEXAS</dd></div>
-                <div><dt>SCHEDULE</dt><dd data-contact="schedule">BUILD SCHEDULE TO BE ANNOUNCED</dd></div>
-                <div><dt>WORKSHOP</dt><dd data-contact="address">ROUND ROCK, TEXAS</dd></div>
-              </dl>
-            </div>
-
-            <div class="contact-block">
-              <h3>SOCIAL CHANNELS</h3>
-              <div class="social-list" id="contact-socials"></div>
-            </div>
-          </aside>
-        </div>
+        <div id="contact-socials"></div>
       </div>
     </section>
   </main>
