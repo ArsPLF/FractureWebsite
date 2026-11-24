@@ -13,11 +13,11 @@
   const $$ = (selector, root) => Array.from((root || document).querySelectorAll(selector));
 
   const NAV_ITEMS = [
-    { id: "about", label: "TEAM", href: "about.html", index: "01" },
-    { id: "robot", label: "ROBOT", href: "robot.html", index: "02" },
-    { id: "outreach", label: "OUTREACH", href: "outreach.html", index: "03" },
-    { id: "achievements", label: "RESULTS", href: "achievements.html", index: "04" },
-    { id: "sponsors", label: "SPONSORS", href: "sponsors.html", index: "05" }
+    { id: "about", label: "About Us", href: "about.html", index: "01" },
+    { id: "robot", label: "Our Robot", href: "robot.html", index: "02" },
+    { id: "outreach", label: "Outreach", href: "outreach.html", index: "03" },
+    { id: "achievements", label: "Achievements", href: "achievements.html", index: "04" },
+    { id: "contact", label: "Contact Us", href: "contact.html", index: "05" }
   ];
 
   function escapeHtml(value) {
@@ -37,6 +37,74 @@
 
   function currentYear() {
     return new Date().getFullYear();
+  }
+
+  /* --------------------------------------------------------------------------
+     THEME / DARK MODE
+     -------------------------------------------------------------------------- */
+
+  const THEME_KEY = "fracture-theme";
+  const htmlRoot = document.documentElement;
+
+  function getSavedTheme() {
+    try {
+      return localStorage.getItem(THEME_KEY);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function setTheme(theme) {
+    if (theme === "light") {
+      htmlRoot.classList.add("theme-light");
+    } else {
+      htmlRoot.classList.remove("theme-light");
+    }
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch (e) {
+      // Storage unavailable; theme still applied for this session.
+    }
+  }
+
+  function initTheme() {
+    const saved = getSavedTheme();
+    const prefersDark = !window.matchMedia ||
+      !window.matchMedia("(prefers-color-scheme: light)").matches;
+    const theme = saved || (prefersDark ? "dark" : "light");
+    setTheme(theme);
+  }
+
+  function buildThemeToggle() {
+    const headerRight = $(".header-right");
+    if (!headerRight) return;
+    const isLight = htmlRoot.classList.contains("theme-light");
+    const label = isLight ? "Switch to dark mode" : "Switch to light mode";
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "theme-toggle";
+    toggle.setAttribute("aria-label", label);
+    toggle.innerHTML =
+      '<span class="theme-toggle__icon" aria-hidden="true">' +
+      (isLight ? "&#9788;" : "&#9790;") +
+      "</span>" +
+      '<span class="theme-toggle__label mono">' +
+      (isLight ? "LIGHT" : "DARK") +
+      "</span>";
+    toggle.addEventListener("click", () => {
+      const nowLight = htmlRoot.classList.toggle("theme-light");
+      toggle.querySelector(".theme-toggle__icon").textContent = nowLight
+        ? "&#9788;"
+        : "&#9790;";
+      toggle.querySelector(".theme-toggle__label").textContent = nowLight
+        ? "LIGHT"
+        : "DARK";
+      toggle.setAttribute("aria-label", nowLight
+        ? "Switch to dark mode"
+        : "Switch to light mode");
+      setTheme(nowLight ? "light" : "dark");
+    });
+    headerRight.insertBefore(toggle, headerRight.firstChild);
   }
 
   /* --------------------------------------------------------------------------
@@ -522,97 +590,64 @@
   }
 
   /* --------------------------------------------------------------------------
-     HOME
+     HOME — LANDING PAGE
      -------------------------------------------------------------------------- */
 
+  function navCardMarkup(id, label, href, index) {
+    return (
+      '<a class="nav-card" href="' +
+      escapeHtml(href) +
+      '">' +
+      '<span class="nav-card__index mono">' +
+      escapeHtml(index) +
+      "</span>" +
+      '<h3 class="nav-card__title display">' +
+      escapeHtml(label) +
+      "</h3>" +
+      '<span class="nav-card__arrow" aria-hidden="true">&#8599;</span>' +
+      "</a>"
+    );
+  }
+
   function hydrateHome() {
-    setText("[data-home='intro']", DATA.home.heroIntro);
-    setText("[data-home='robotSummary']", DATA.home.robotPreviewSummary);
-    setText("[data-home='rosterNote']", DATA.home.rosterNote);
-    setText("[data-home='outreachTeaser']", DATA.home.outreachTeaser);
-    setText("[data-home='sponsorTeaser']", DATA.home.sponsorTeaser);
+    const navCards = [
+      { id: "about", label: "About Us", href: "about.html", index: "01" },
+      { id: "robot", label: "Our Robot", href: "robot.html", index: "02" },
+      { id: "outreach", label: "Outreach", href: "outreach.html", index: "03" },
+      { id: "achievements", label: "Achievements", href: "achievements.html", index: "04" },
+      { id: "contact", label: "Contact Us", href: "contact.html", index: "05" }
+    ];
 
-    setMedia($("#home-hero-media"), {
-      image: DATA.home.heroImage,
-      path: "assets/images/robot/hero-chassis.jpg",
-      alt: DATA.home.heroImageAlt,
-      eager: true
-    });
+    const homeMain = $("#main");
+    if (!homeMain) return;
 
-    const kpi = $("#home-kpi-strip");
-    if (kpi) kpi.innerHTML = DATA.home.keyStats.map(statMarkup).join("");
-
-    const principles = $("#home-principles");
-    if (principles) {
-      principles.innerHTML = DATA.home.principles
-        .map(
-          (item, index) =>
-            '<article class="principle reveal" style="--d:' +
-            index * 80 +
-            '">' +
-            '<span class="principle__index">' +
-            escapeHtml(item.index) +
-            "</span>" +
-            '<div class="principle__copy"><h3>' +
-            escapeHtml(item.title) +
-            "</h3><p>" +
-            escapeHtml(item.body) +
-            "</p></div>" +
-            '<span class="principle__mark" aria-hidden="true">+</span>' +
-            "</article>"
-        )
-        .join("");
-    }
-
-    setMedia($("#home-robot-preview-media"), {
-      image: DATA.robot.cadImage,
-      path: "assets/images/robot/cad-assembly.jpg",
-      alt: DATA.robot.cadImageAlt
-    });
-
-    const robotSpecs = $("#home-robot-specs");
-    if (robotSpecs) {
-      robotSpecs.innerHTML = DATA.home.robotPreviewSpecs
-        .map(
-          (spec) =>
-            '<div class="spec-row"><span>' +
-            escapeHtml(spec.label) +
-            "</span><strong>" +
-            escapeHtml(spec.value) +
-            "</strong></div>"
-        )
-        .join("");
-    }
-
-    const roster = $("#home-roster-preview");
-    if (roster) {
-      roster.innerHTML = DATA.about.members
-        .slice(0, 5)
-        .map((person, index) => memberCardMarkup(person, index * 70))
-        .join("");
-    }
-
-    const outreach = $("#home-outreach-preview");
-    if (outreach) {
-      outreach.innerHTML = DATA.outreach.programs
-        .slice(0, 3)
-        .map(
-          (program, index) =>
-            '<a class="mini-program reveal" style="--d:' +
-            index * 80 +
-            '" href="outreach.html">' +
-            '<div class="mini-program__top"><span class="tag">' +
-            escapeHtml(program.status) +
-            '</span><span class="mono">' +
-            String(index + 1).padStart(2, "0") +
-            '</span></div><h3 class="mini-program__title">' +
-            escapeHtml(program.title) +
-            '</h3><p class="mini-program__copy">' +
-            escapeHtml(program.summary) +
-            '</p><span class="mini-program__link">OPEN PROGRAM <span aria-hidden="true">&#8599;</span></span></a>'
-        )
-        .join("");
-    }
+    homeMain.innerHTML =
+      '<section class="page-hero home-cover" data-glow>' +
+      '<div class="container home-cover__inner">' +
+      '<div class="home-logo">' +
+      '<img class="home-logo__mark" src="' +
+      escapeHtml(DATA.identity.logoPath) +
+      '" alt="" width="160" height="160" loading="eager" />' +
+      "</div>" +
+      '<h1 class="home-title display">FRACTURE</h1>' +
+      '<span class="home-number display mono">37687</span>' +
+      '<span class="home-sub mono">FTC TEAM // ROUND ROCK, TEXAS</span>' +
+      "</div>" +
+      '</section>' +
+      '<section class="section section--light home-nav-section">' +
+      '<div class="container">' +
+      '<div class="nav-grid">' +
+      navCards.map(navCardMarkup).join("") +
+      "</div>" +
+      "</div>" +
+      '</section>' +
+      '<section class="section section--dark home-note-section">' +
+      '<div class="container">' +
+      '<p class="home-note mono" style="text-align:center;">' +
+      "Five builders. One machine. No shortcuts — just the next iteration." +
+      "</p>" +
+      "</div>" +
+      "</section>";
   }
 
   /* --------------------------------------------------------------------------
@@ -1143,72 +1178,6 @@
   }
 
   /* --------------------------------------------------------------------------
-     SPONSORS
-     -------------------------------------------------------------------------- */
-
-  function hydrateSponsors() {
-    setText("[data-sponsors='intro']", DATA.sponsors.intro);
-    setText("[data-sponsors='partnerNote']", DATA.sponsors.partnerNote);
-
-    const partners = $("#sponsors-partners-grid");
-    if (partners) {
-      const slots = [];
-      for (let i = 0; i < DATA.sponsors.openSlots; i += 1) {
-        slots.push(
-          '<div class="sponsor-slot reveal" style="--d:' +
-            i * 70 +
-            '"><span class="sponsor-slot__plus" aria-hidden="true">+</span><span class="sponsor-slot__code">OPEN SLOT // ' +
-            String(i + 1).padStart(2, "0") +
-            '</span><strong>FOUNDING PARTNER</strong><span class="sponsor-slot__note">Reserved for a partner who backs the build.</span></div>'
-        );
-      }
-      partners.innerHTML = slots.join("");
-    }
-
-    const tiers = $("#sponsors-tiers-grid");
-    if (tiers) {
-      tiers.innerHTML = DATA.sponsors.tiers
-        .map(
-          (tier, index) =>
-            '<article class="tier-card reveal' +
-            (tier.featured ? " tier-card--featured" : "") +
-            '" style="--d:' +
-            index * 80 +
-            '"><div class="tier-card__head"><span class="mono">TIER / ' +
-            String(index + 1).padStart(2, "0") +
-            '</span><span class="tag">' +
-            (tier.featured ? "LEAD" : "OPEN") +
-            '</span></div><h3>' +
-            escapeHtml(tier.name) +
-            '</h3><span class="tier-card__investment">' +
-            escapeHtml(tier.investment) +
-            '</span><ul class="tier-list">' +
-            tier.benefits.map((benefit) => "<li>" + escapeHtml(benefit) + "</li>").join("") +
-            "</ul></article>"
-        )
-        .join("");
-    }
-
-    const funding = $("#sponsors-funding-grid");
-    if (funding) {
-      funding.innerHTML = DATA.sponsors.fundingAllocation
-        .map(
-          (item, index) =>
-            '<div class="funding-row reveal" style="--d:' +
-            index * 60 +
-            '"><span class="funding-row__priority">' +
-            escapeHtml(item.priority) +
-            '</span><div><h3>' +
-            escapeHtml(item.category) +
-            "</h3><p>" +
-            escapeHtml(item.detail) +
-            "</p></div></div>"
-        )
-        .join("");
-    }
-  }
-
-  /* --------------------------------------------------------------------------
      CONTACT
      -------------------------------------------------------------------------- */
 
@@ -1348,7 +1317,9 @@
      -------------------------------------------------------------------------- */
 
   document.addEventListener("DOMContentLoaded", () => {
+    initTheme();
     buildHeader();
+    buildThemeToggle();
     buildFooter();
     hydrateTicker();
     initScrollUI();
@@ -1359,7 +1330,6 @@
     if (page === "robot") hydrateRobot();
     if (page === "outreach") hydrateOutreach();
     if (page === "achievements") hydrateAchievements();
-    if (page === "sponsors") hydrateSponsors();
     if (page === "contact") hydrateContact();
 
     bindImageFallbacks(document);

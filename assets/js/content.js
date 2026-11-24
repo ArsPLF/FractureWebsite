@@ -32,7 +32,7 @@ window.TEAM_CONTENT = {
     meetingSchedule: "Build schedule to be announced",
     workshopAddress: "Round Rock, Texas",
 
-    logoPath: "assets/icons/team-mark.svg",
+    logoPath: "assets/icons/fracture-logo.png",
 
     // TODO: Add official profile URLs when the team accounts are live.
     // A blank url renders as a "pending" row instead of a broken link.
@@ -438,69 +438,6 @@ window.TEAM_CONTENT = {
         index: "03",
         title: "A Real Outreach Log",
         body: "Host events, mentor rookies, and record the impact with actual attendance and hours instead of vague claims."
-      }
-    ]
-  },
-
-  sponsors: {
-    intro:
-      "Fracture is seeking founding partners who want to invest in student engineering in Round Rock. Every contribution — funding, materials, machining, or mentorship — goes directly into the build and the outreach program.",
-    partnerNote:
-      "The founding partner wall is open. Logos and recognition tiers will be published here as commitments are confirmed.",
-    openSlots: 4,
-    tiers: [
-      {
-        name: "Founding Partner",
-        investment: "Lead commitment",
-        featured: true,
-        benefits: [
-          "Primary logo placement on the competition robot and pit banner",
-          "Featured placement on the website and season engineering packet",
-          "Lab tour, robot demonstration, and an annual impact report",
-          "First right of renewal for the following season"
-        ]
-      },
-      {
-        name: "Engineering Partner",
-        investment: "Project-level support",
-        benefits: [
-          "Logo placement on robot panels, team apparel, and pit signage",
-          "Sponsor listing on the website and in season communications",
-          "Invitation to scrimmages and the end-of-season review",
-          "Direct support for a named subsystem or tooling purchase"
-        ]
-      },
-      {
-        name: "Community Partner",
-        investment: "Outreach support",
-        benefits: [
-          "Recognition on the sponsor directory and outreach materials",
-          "End-of-season engineering and outreach summary",
-          "Direct support for workshop kits and community events",
-          "A clear line from your contribution to local STEM access"
-        ]
-      }
-    ],
-    fundingAllocation: [
-      {
-        priority: "01",
-        category: "Robot Hardware & Fabrication",
-        detail: "Raw stock, fasteners, motors, sensors, electronics, and fabrication consumables."
-      },
-      {
-        priority: "02",
-        category: "Competition Registration & Travel",
-        detail: "Season registration, event entry, pit safety gear, and team transport."
-      },
-      {
-        priority: "03",
-        category: "Outreach Kits & Workshops",
-        detail: "Electronics kits, demo supplies, and curriculum materials provided at low or no cost."
-      },
-      {
-        priority: "04",
-        category: "Tooling & Safety",
-        detail: "Metrology, machine maintenance, eye protection, and battery test equipment."
       }
     ]
   },

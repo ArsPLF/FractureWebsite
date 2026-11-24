@@ -6,6 +6,7 @@ Static website for **Fracture**, a FIRST Tech Challenge team in Round Rock, Texa
 - **Number:** 37687
 - **Program:** FIRST Tech Challenge
 - **Season:** 2026–27
+- **Location:** Round Rock, Texas
 - **Live site:** https://arsplf.github.io/FractureWebsite/
 
 No build step, no framework, no backend. The site is plain HTML, CSS, and vanilla JavaScript, designed to deploy directly from the repository root with GitHub Pages.
@@ -14,12 +15,11 @@ No build step, no framework, no backend. The site is plain HTML, CSS, and vanill
 
 | File | Page |
 | --- | --- |
-| `index.html` | Home |
+| `index.html` | Home — centered team logo, name, and number, plus navigation cards |
 | `about.html` | Team, values, roadmap, roster, awards and rankings |
 | `robot.html` | Robot overview, specifications, subsystems, CAD |
 | `outreach.html` | Outreach programs and impact |
 | `achievements.html` | Results archive and season objectives |
-| `sponsors.html` | Sponsorship tiers and partner slots |
 | `contact.html` | Contact channels and email draft builder |
 
 ## Project structure
@@ -31,7 +31,6 @@ No build step, no framework, no backend. The site is plain HTML, CSS, and vanill
 ├── robot.html
 ├── outreach.html
 ├── achievements.html
-├── sponsors.html
 ├── contact.html
 ├── assets/
 │   ├── css/styles.css
@@ -39,6 +38,9 @@ No build step, no framework, no backend. The site is plain HTML, CSS, and vanill
 │   ├── js/main.js         ← rendering and interactions
 │   ├── images/
 │   └── icons/
+│       ├── fracture-logo.png   ← official team logo (replace with provided asset)
+│       ├── favicon.svg
+│       └── team-mark.svg
 └── README.md
 ```
 
@@ -109,16 +111,19 @@ Both panels show an honest empty state while their arrays are empty. The section
 
 | Content | Location in `content.js` |
 | --- | --- |
-| Team name, number, location, email, socials | `identity` |
-| Home hero, stats, principles | `home` |
+| Team name, number, location, email, socials, logo path | `identity` |
+| Home identity, subtitle | `home` |
 | Team intro, values, roadmap, roster | `about` |
 | Robot specs, subsystems, CAD | `robot` |
 | Outreach programs and impact stats | `outreach` |
 | Results archive and objectives | `achievements` |
-| Sponsor tiers, slots, funding allocation | `sponsors` |
 | Contact channels and form copy | `contact` |
 
 Items marked `// TODO:` in `content.js` are placeholders that still need real team data.
+
+### Logo
+
+The official team logo lives at `assets/icons/fracture-logo.png`. It is referenced from `content.js` as `identity.logoPath` and is used in the header, footer, and centered on the homepage. Replace `fracture-logo.png` with the official logo asset when it is available; keep the same filename so no `content.js` change is needed.
 
 ## Images
 
@@ -139,6 +144,11 @@ To replace one, keep the same path and filename, or update the path in `content.
 - **Member roles and descriptions:** All roster entries currently read “To be announced”.
 - **Awards and rankings:** The arrays are empty by design. Do not add unverified results.
 - **Robot specifications:** Many values remain `TBA`, `UNDER EVALUATION`, or `TO BE MEASURED`.
+- **Team logo:** Replace `assets/icons/fracture-logo.png` with the official logo asset.
+
+## Light / dark mode
+
+The site includes a light/dark mode toggle in the top navigation bar. The user's preference is persisted in `localStorage` and respected on reload. The system preference is used as the fallback when no saved preference exists.
 
 ## Deploy to GitHub Pages
 
