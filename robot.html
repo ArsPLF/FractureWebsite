@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Robot — Fracture #37687</title>
+  <meta name="description" content="Project 37687 is Fracture's first FTC competition platform. Follow the drivetrain, intake, scoring, electronics, and software as they are designed and built." />
+  <meta name="theme-color" content="#050506" />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sora:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body data-page="robot">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="site-header" id="site-header"></header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">HOME</a>
+          <span aria-hidden="true">/</span>
+          <span>ROBOT</span>
+        </nav>
+
+        <div class="page-hero__layout">
+          <div>
+            <span class="eyebrow"><span class="status-dot" aria-hidden="true"></span> COMPETITION PLATFORM <span class="slash">/</span> DESIGN PHASE</span>
+            <h1 class="page-title display">PROJECT<br /><span class="outline-text">37687.</span></h1>
+            <p class="page-lede" data-robot="overview">The first Fracture competition platform is in development.</p>
+          </div>
+
+          <div class="data-panel">
+            <div class="data-panel__head"><span>MACHINE DATA</span><span>REV 0.1</span></div>
+            <dl class="data-list">
+              <div><dt>PLATFORM</dt><dd>PROJECT 37687</dd></div>
+              <div><dt>SEASON</dt><dd>2026–27</dd></div>
+              <div><dt>PROGRAM</dt><dd>FTC</dd></div>
+              <div><dt>STATUS</dt><dd>DESIGN PHASE</dd></div>
+              <div><dt>CAD</dt><dd>REV 0.1 / IN PROGRESS</dd></div>
+              <div><dt>WEIGHT</dt><dd>TO BE MEASURED</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="wide-media" id="robot-hero-media"></div>
+        <div class="page-hero__caption">
+          <span>REFERENCE CHASSIS / WORKSHOP</span>
+          <span>TEAM CAD AND PHOTOGRAPHY TO BE ADDED</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dark">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head__label">
+            <span>01 / SNAPSHOT</span>
+            <span>MACHINE AT A GLANCE</span>
+          </div>
+          <div class="section-head__main">
+            <h2 class="section-title">THE SHORT<br />VERSION.</h2>
+            <div class="section-head__aside">
+              <p>Confirmed values only. Anything still under evaluation is labeled as such rather than guessed at.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-band" id="robot-quick-specs"></div>
+      </div>
+    </section>
+
+    <section class="section section--light">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head__label">
+            <span>02 / SPECIFICATION</span>
+            <span>PARAMETER SHEET</span>
+          </div>
+          <div class="section-head__main">
+            <h2 class="section-title">THE HARD<br />NUMBERS.</h2>
+            <div class="section-head__aside">
+              <p>This sheet updates with the build. Pending entries are real gaps in the design, not missing web content.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="spec-table-wrap">
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th scope="col">PARAMETER</th>
+                <th scope="col">SPEC</th>
+                <th scope="col">NOTES</th>
+              </tr>
+            </thead>
+            <tbody id="robot-spec-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dark">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head__label">
+            <span>03 / SUBSYSTEMS</span>
+            <span>DESIGN BREAKDOWN</span>
+          </div>
+          <div class="section-head__main">
+            <h2 class="section-title">FIVE SYSTEMS.<br />ZERO MYSTERY.</h2>
+            <div class="section-head__aside">
+              <p>Open a system to see its design intent, current status, and the measurements we still owe it.</p>
+              <div class="feature-actions">
+                <button type="button" class="btn btn--ghost btn--sm" id="robot-expand-all">EXPAND ALL</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion" id="robot-subsystems"></div>
+      </div>
+    </section>
+
+    <section class="section section--light">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head__label">
+            <span>04 / CAD</span>
+            <span>MASTER ASSEMBLY</span>
+          </div>
+          <div class="section-head__main">
+            <h2 class="section-title">MODEL FIRST.<br />CUT ONCE.</h2>
+            <div class="section-head__aside">
+              <p>Structural parts are modeled before they are fabricated. The master assembly and drawings will be published as revisions land.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cad-grid">
+          <div class="cad-media" id="robot-cad-media"></div>
+          <div class="cad-copy">
+            <span class="eyebrow">MASTER ASSEMBLY <span class="slash">/</span> WORK IN PROGRESS</span>
+            <h3 class="feature-title">REV 0.1 /<br />IN PROGRESS.</h3>
+            <p data-robot="cadSummary">Every structural plate, bracket, and mechanism will be modeled before fabrication.</p>
+            <div class="cad-meta">
+              <span>CAD PLATFORM <strong data-robot="cadSoftware">TO BE ANNOUNCED</strong></span>
+              <span>REVISION <strong data-robot="cadRevision">REV 0.1</strong></span>
+            </div>
+            <ul class="deliverable-list" id="robot-cad-deliverables"></ul>
+            <div class="cad-actions">
+              <a class="btn btn--primary" href="contact.html">REQUEST A DESIGN REVIEW <span class="btn-arrow" aria-hidden="true">&#8599;</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band" data-glow>
+      <div class="container cta-band__inner">
+        <div class="cta-band__copy">
+          <span class="eyebrow"><span class="status-dot" aria-hidden="true"></span> BUILD LOG // LIVE</span>
+          <h2 class="cta-band__title display">WATCH IT<br /><span class="outline-text">COME TOGETHER.</span></h2>
+          <p>Want a closer look at the platform, the CAD, or the control stack? Bring your questions to a demo or start a conversation with the team.</p>
+        </div>
+        <div class="cta-band__actions">
+          <a class="btn btn--primary" href="outreach.html">SEE OUTREACH <span class="btn-arrow" aria-hidden="true">&#8599;</span></a>
+          <a class="btn btn--ghost" href="contact.html">CONTACT THE TEAM <span class="btn-arrow" aria-hidden="true">&#8599;</span></a>
+        </div>
+      </div>
+      <span class="ghost-word cta-band__ghost" aria-hidden="true">BUILD</span>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="assets/js/content.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
